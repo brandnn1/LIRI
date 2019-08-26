@@ -68,3 +68,32 @@ function concertIt() {
     );
     }
 }
+
+
+function movieIt() {
+
+    if (searchTerm === "") {
+        searchTerm = "clue"
+    }
+
+    axios.get("http://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy").then(
+        function (response) {
+        console.log(response)
+            var currentData = `\r\n
+    Title: ${response.data.Title}
+
+    Rated: ${response.data.Rated}
+    Released: ${response.data.Year}
+    IMDB Rating: ${response.data.imdbRating}
+    Plot: ${response.data.Plot}
+    Actors: ${response.data.Actors}
+    Language: ${response.data.Language}
+    Country: ${response.data.Country}
+            `
+            console.log(currentData)
+
+        }
+    );
+
+    
+}
