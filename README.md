@@ -8,26 +8,26 @@ Below are examples of how you would interact with this application. Note: do not
 
 node liri.js concert-this <band/artist name>
 
-![Concert Capture](/images/ConcertCapture.PNG)
+![Concert Capture](/Images/ConcertCapture.PNG)
 Format: ![Concert Call]
 
 -Spotify-
 
 node liri.js spotify-this-song <song title>
 
-![GitHub Logo](/images/SpotifyCapture.PNG)
+![GitHub Logo](/Images/SpotifyCapture.PNG)
 Format: ![Spotify Call]
 
 -OMDB- 
 
 node liri.js movie-this <movie name>
 
-![GitHub Logo](/images/MovieCapture.PNG)
+![GitHub Logo](/Images/MovieCapture.PNG)
 Format: ![Movie Call]
 
 Additionally this application supports making API calls directly from a text file. The first input in the file will be the api you want to call (in it's above naming convention) and the second input will be your search parameters. Currently the file is configured to make a spotify call
 
 node liri.js do-what-it-says
 
-![GitHub Logo](/images/SimonSaysCapture.PNG)
+![GitHub Logo](/Images/SimonSaysCapture.PNG)
 Format: ![Do What I Say Text]
