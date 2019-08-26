@@ -2,12 +2,13 @@ require("dotenv").config();
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
+const env = process.env;
 var Spotify = require('node-spotify-api');
 var spotify = new Spotify({
     id: env.SPOTIFY_ID,
     secret: env.SPOTIFY_SECRET
 });
-const env = process.env;
+
 
 //Capture input
 var query = process.argv;
@@ -49,32 +50,30 @@ function runIt() {
 
 function concertIt() {
     if (searchTerm === "") {
-        console.log('\r\n')
-        console.log("No artist entered.")
-        console.log('\r\n')
-    } else {
-        console.log(searchTerm)
-        axios.get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp").then(
-            function (response) {
-                if (response.data.length <= 0) {
-                    console.log("There is no available information for this artist")
-                } else {
-                    for (var i = 0; i < response.data.length; i++) {
-
-                        var currentData = `\r\n
-    Venue: ${response.data[i].venue.name}
-    Location: ${response.data[i].venue.city + ", " + response.data[0].venue.region}
-    Event Date: ${moment(response.data[i].datetime).format('LLLL')}
-            `
-                        console.log(currentData)
-                    }
-                }
-                dataLog(currentData)
-
-            }
-        );
+        searchTerm = "Die Antwoord"
     }
+    console.log(searchTerm)
+    axios.get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp").then(
+        function (response) {
+            if (response.data.length <= 0) {
+                console.log("There is no available information for this artist")
+            } else {
+                for (var i = 0; i < response.data.length; i++) {
+
+                    var currentData = `\r\n
+                        Venue: ${response.data[i].venue.name}
+                        Location: ${response.data[i].venue.city + ", " + response.data[0].venue.region}
+                        Event Date: ${moment(response.data[i].datetime).format('LLLL')}
+            `
+                    console.log(currentData)
+                }
+            }
+            dataLog(currentData)
+
+        }
+    );
 }
+
 
 
 function movieIt() {
@@ -85,7 +84,6 @@ function movieIt() {
 
     axios.get("http://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy").then(
         function (response) {
-            console.log(response)
             var currentData = `\r\n
     Title: ${response.data.Title}
 
@@ -149,7 +147,7 @@ function saysIt() {
 
 }
 
-//Input Logger
+//Appends the input calls to the log.txt file
 
 var logQuery = query.splice(0, 2)
 logQuery = "\r\n\r\n" + query.join(" ") + "\r\n"
@@ -160,12 +158,12 @@ fs.appendFile("log.txt", logQuery, function (error) {
     if (error) {
         console.log(error);
     } else {
-        console.log("Log Updated");
+        console.log("Input Values Logged");
     }
 
 });
 
-//Data log 
+//Appends data responses to the log.txt file
 
 function dataLog(data) {
     fs.appendFile("log.txt", data, function (error) {
@@ -173,7 +171,7 @@ function dataLog(data) {
         if (error) {
             console.log(error);
         } else {
-            console.log("Log Updated");
+            console.log("Response Data Logged");
         }
 
     });
