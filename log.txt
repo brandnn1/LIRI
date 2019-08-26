@@ -1,0 +1,42 @@
+
+
+movie-this the godfather
+
+
+    Title: The Godfather
+
+    Rated: R
+    Released: 1972
+    IMDB Rating: 9.2
+    Plot: The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.
+    Actors: Marlon Brando, Al Pacino, James Caan, Richard S. Castellano
+    Language: English, Italian, Latin
+    Country: USA
+            
+
+spotify-this-song palmolive
+
+
+    Artist: Freddie Gibbs
+    Track: Palmolive (feat. Pusha T & Killer Mike)
+    Preview: https://p.scdn.co/mp3-preview/32ba0247cc5657cc6ae5d853848b9a5ae7cbe06b?cid=2abce46033464afb81e7842426b852d0
+    Album: Bandana
+            
+
+spotify-this-song rosa parks
+
+
+    Artist: OutKast
+    Track: Rosa Parks
+    Preview: https://p.scdn.co/mp3-preview/4840e1d9108135ad3efbf7ff04f459dac942f9ff?cid=2abce46033464afb81e7842426b852d0
+    Album: Aquemini
+            
+
+do-what-it-says
+
+
+    Artist: Backstreet Boys
+    Track: I Want It That Way
+    Preview: https://p.scdn.co/mp3-preview/e72a05dc3f69c891e3390c3ceaa77fad02f6b5f6?cid=2abce46033464afb81e7842426b852d0
+    Album: The Hits--Chapter One
+            

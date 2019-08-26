@@ -1,15 +1,13 @@
 require("dotenv").config();
 var axios = require("axios");
 var moment = require("moment");
-const env = process.env;
-
+var fs = require("fs");
 var Spotify = require('node-spotify-api');
-
 var spotify = new Spotify({
     id: env.SPOTIFY_ID,
     secret: env.SPOTIFY_SECRET
 });
-
+const env = process.env;
 
 //Capture input
 var query = process.argv;
@@ -22,31 +20,32 @@ for (var i = 3; i < query.length; i++) {
     array.push("+")
 }
 //removes the final + sign at the tail of the input
-array.splice(-1); 
+array.splice(-1);
 
 //concatenates above arracy into single string
-var searchTerm = array.join(""); 
+var searchTerm = array.join("");
 
 //runs the switch function to determine which process was called
 runIt()
 
-function runIt(){
-switch (type) {
-    case 'spotify-this-song':
-        spotifyIt()
-        break;
-    case 'concert-this':
-        concertIt()
-        break;
-    case 'movie-this':
-        movieIt()
-        break;
-    case 'do-what-it-says':
-        itSays()
-        break;
-    default:
-        console.log("No search value found");
-}}
+function runIt() {
+    switch (type) {
+        case 'spotify-this-song':
+            spotifyIt()
+            break;
+        case 'concert-this':
+            concertIt()
+            break;
+        case 'movie-this':
+            movieIt()
+            break;
+        case 'do-what-it-says':
+            saysIt()
+            break;
+        default:
+            console.log("No search value found");
+    }
+}
 
 function concertIt() {
     if (searchTerm === "") {
@@ -56,24 +55,24 @@ function concertIt() {
     } else {
         console.log(searchTerm)
         axios.get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp").then(
-        function (response) {
-           if(response.data.length <= 0) {
-               console.log("There is no available information for this artist")
-           }else {
-            for(var i=0; i < response.data.length; i++) {
+            function (response) {
+                if (response.data.length <= 0) {
+                    console.log("There is no available information for this artist")
+                } else {
+                    for (var i = 0; i < response.data.length; i++) {
 
-                var currentData = `\r\n
+                        var currentData = `\r\n
     Venue: ${response.data[i].venue.name}
     Location: ${response.data[i].venue.city + ", " + response.data[0].venue.region}
     Event Date: ${moment(response.data[i].datetime).format('LLLL')}
             `
-            console.log(currentData)
-            }
-           }
-           
+                        console.log(currentData)
+                    }
+                }
+                dataLog(currentData)
 
-        }
-    );
+            }
+        );
     }
 }
 
@@ -86,7 +85,7 @@ function movieIt() {
 
     axios.get("http://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy").then(
         function (response) {
-        console.log(response)
+            console.log(response)
             var currentData = `\r\n
     Title: ${response.data.Title}
 
@@ -99,11 +98,11 @@ function movieIt() {
     Country: ${response.data.Country}
             `
             console.log(currentData)
-
+            dataLog(currentData)
         }
     );
 
-    
+
 }
 
 
@@ -128,8 +127,54 @@ function spotifyIt() {
     Preview: ${data.tracks.items[0].preview_url}
     Album: ${data.tracks.items[0].album.name}
             `
-            console.log(currentData)
+        console.log(currentData)
+        dataLog(currentData)
 
+    });
+}
+
+//Utilize fs functionality to read content of text file and manipulate the runIt search by whatever is called in the file. In this case contents are for a spotify search
+function saysIt() {
+    fs.readFile("random.txt", "utf8", function (error, data) {
+
+        if (error) {
+            return console.log(error);
+        }
+
+        var dataArr = data.split(",");
+        type = dataArr[0];
+        searchTerm = dataArr[1];
+        runIt()
+    });
+
+}
+
+//Input Logger
+
+var logQuery = query.splice(0, 2)
+logQuery = "\r\n\r\n" + query.join(" ") + "\r\n"
+console.log(logQuery)
+
+fs.appendFile("log.txt", logQuery, function (error) {
+
+    if (error) {
+        console.log(error);
+    } else {
+        console.log("Log Updated");
+    }
+
+});
+
+//Data log 
+
+function dataLog(data) {
+    fs.appendFile("log.txt", data, function (error) {
+
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Log Updated");
+        }
 
     });
 }
