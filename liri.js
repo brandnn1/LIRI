@@ -1,6 +1,14 @@
 require("dotenv").config();
 var axios = require("axios");
 var moment = require("moment");
+const env = process.env;
+
+var Spotify = require('node-spotify-api');
+
+var spotify = new Spotify({
+    id: env.SPOTIFY_ID,
+    secret: env.SPOTIFY_SECRET
+});
 
 
 //Capture input
@@ -42,9 +50,9 @@ switch (type) {
 
 function concertIt() {
     if (searchTerm === "") {
-        console.log('\n')
+        console.log('\r\n')
         console.log("No artist entered.")
-        console.log('\n')
+        console.log('\r\n')
     } else {
         console.log(searchTerm)
         axios.get("https://rest.bandsintown.com/artists/" + searchTerm + "/events?app_id=codingbootcamp").then(
@@ -54,7 +62,7 @@ function concertIt() {
            }else {
             for(var i=0; i < response.data.length; i++) {
 
-                var currentData = `\n
+                var currentData = `\r\n
     Venue: ${response.data[i].venue.name}
     Location: ${response.data[i].venue.city + ", " + response.data[0].venue.region}
     Event Date: ${moment(response.data[i].datetime).format('LLLL')}
@@ -96,4 +104,32 @@ function movieIt() {
     );
 
     
+}
+
+
+function spotifyIt() {
+
+    if (searchTerm === "") {
+        searchTerm = "rosa+parks"
+    }
+    console.log(searchTerm)
+    spotify.search({
+        type: 'artist,track',
+        query: searchTerm
+    }, function (error, data) {
+        if (error) {
+            return console.log('Error occurred: ' + error);
+        }
+        console.log('\r\n')
+
+        var currentData = `\r\n
+    Artist: ${data.tracks.items[0].artists[0].name}
+    Track: ${data.tracks.items[0].name}
+    Preview: ${data.tracks.items[0].preview_url}
+    Album: ${data.tracks.items[0].album.name}
+            `
+            console.log(currentData)
+
+
+    });
 }
