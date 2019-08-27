@@ -31,16 +31,16 @@ runIt()
 
 function runIt() {
     switch (type) {
-        case 'spotify-this-song':
+        case 'spotify-call':
             spotifyIt()
             break;
-        case 'concert-this':
+        case 'concert-call':
             concertIt()
             break;
-        case 'movie-this':
+        case 'movie-call':
             movieIt()
             break;
-        case 'do-what-it-says':
+        case 'random-call':
             saysIt()
             break;
         default:
