@@ -15,7 +15,9 @@ var query = process.argv;
 var type = process.argv[2];
 var array = [];
 
-//For loop to capture arguments after type is passed. puts each value into array with a + symbole between inputs
+//For loop to capture arguments after type is passed. puts each value into array with a + symbole between character sets
+//sets i to 3 as the query is a part of process.argv and the 0 and 1 index are always file location information. process.argv 2 is already allocated 
+//to the type of call being made to index 3 is where the additional parameters are passed
 for (var i = 3; i < query.length; i++) {
     array.push(query[i]);
     array.push("+")
@@ -31,16 +33,16 @@ runIt()
 
 function runIt() {
     switch (type) {
-        case 'spotify-call':
+        case 'spotify-this-song':
             spotifyIt()
             break;
-        case 'concert-call':
+        case 'concert-this':
             concertIt()
             break;
-        case 'movie-call':
+        case 'movie-this':
             movieIt()
             break;
-        case 'random-call':
+        case 'do-what-it-says':
             saysIt()
             break;
         default:
